@@ -169,8 +169,5 @@ namespace DiceSpace {
     }
 }
 
-std::istream &operator>>(std::istream &istream, int value){
-
-}
 
 
