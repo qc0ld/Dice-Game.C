@@ -22,6 +22,10 @@ namespace DiceSpace {
 
         Dice_vector(int n);
 
+        Dice_vector(const Dice_vector &vector);
+
+        Dice_vector(Dice_vector &&vector);
+
         int get_max_size() const;
 
         int *get_dice_vector() const;
@@ -46,23 +50,26 @@ namespace DiceSpace {
 
         int check_for_coincidences() const;
 
-        void realloc_by_func(int max);
-
         int operator[](int value);
 
         int operator*();
 
         Dice_vector &operator+=(int value);
 
-        Dice_vector &operator+(Dice_vector &temp_vector);
+        Dice_vector operator+(const Dice_vector &vector);
 
-        Dice_vector &operator=(Dice_vector &temp_vector);
+        Dice_vector &operator=(const Dice_vector &vector);
 
+        Dice_vector &operator=(Dice_vector &&vector);
 
         ~Dice_vector();
     };
 
 }
+
+std::ostream &operator<<(std::ostream &os, const DiceSpace::Dice_vector &vector);
+
+std::istream &operator>>(std::istream &istream, DiceSpace::Dice_vector &vector);
 
 
 #endif //DICE_H

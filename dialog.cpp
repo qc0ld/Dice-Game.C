@@ -4,12 +4,8 @@
 
 namespace Dialog {
     void throw_dice(Dice_vector &vector) {
-        if (vector.get_amount() == 0) {
-            cout << "Nothing to throw" << endl;
-        } else {
-            vector.throw_dice();
-            cout << "Dices were thrown" << endl;
-        }
+        vector.throw_dice();
+        cout << "Dices were thrown" << endl;
         display_dice(vector);
     }
 
@@ -19,55 +15,27 @@ namespace Dialog {
     }
 
     void remove_dice(Dice_vector &vector) {
-        if (vector.get_amount() == 0) {
-            cout << "There is no dices" << endl;
-            return;
-        }
         int number = read_int("number");
-        if (number < 1 || number > vector.get_amount()) {
-            cout << "Dice not found" << endl;
-            return;
-        }
         vector.remove_dice(number);
         cout << "Dice was removed" << endl;
         display_dice(vector);
     }
 
     void remove_all_dices(Dice_vector &vector) {
-        if (vector.get_amount() == 0) {
-            cout << "There is no dices" << endl;
-        } else {
-            vector.remove_all_dices();
-            cout << "All dices were removed" << endl;
-        }
+        vector.remove_all_dices();
+        cout << "All dices were removed" << endl;
     }
 
     void display_dice(Dice_vector &vector) {
-        if (vector.get_amount() == 0) {
-            cout << "There is no dices" << endl;
-            return;
-        }
-        for (int i = 0; i < vector.get_max_size(); ++i) {
-            if (vector.get_value(i) != 0) {
-                cout << i + 1 << ": " << "[" << vector.get_value(i) << "]" << endl;
-            }
-        }
+        cout << vector;
     }
 
     void find_dice(Dice_vector &vector) {
         int number = read_int("number");
-        if (number < 1 || number > vector.get_amount()) {
-            cout << "Dice not found" << endl;
-        } else {
-            cout << vector[number] << " <- Your dice #" << number << endl;
-        }
+        cout << vector[number] << " <- Your dice #" << number << endl;
     }
 
     void sum_all_dices(Dice_vector &vector) {
-        if (vector.get_amount() == 0) {
-            cout << "There is no dices to sum" << endl;
-            return;
-        }
         cout << *vector << " <- Sum of all dices" << endl;
     }
 
@@ -106,13 +74,26 @@ namespace Dialog {
         display_dice(a);
     }
 
+    void create_new_group(Dice_vector &vector) {
+        int count = read_int("amount of new group of dices");
+        vector.remove_all_dices();
+        for (int i = 0; i < count; ++i) {
+            cout << "Enter element #" << i + 1 << ": ";
+            cin >> vector;
+            cout << vector;
+        }
+    }
+
     void menu() {
         cout << "1. Test []" << endl;
         cout << "2. Test *" << endl;
         cout << "3. Test +=" << endl;
         cout << "4. Test =" << endl;
         cout << "5. Test = and +" << endl;
-        cout << "6. Display current dice group" << endl;
+        cout << "6. Test << and >>" << endl;
+        cout << "7. Test copy constructor" << endl;
+        cout << "8. Test move constructor" << endl;
+        cout << "9. Test move assigment" << endl;
         cout << "0. Exit" << endl;
     }
 
@@ -138,14 +119,32 @@ namespace Dialog {
         sum_with_group(vector);
     }
 
+    void test6(Dice_vector &vector) {
+        create_new_group(vector);
+    }
+
+    void test7(Dice_vector &vector) {
+        Dice_vector dice_vector(vector);
+        cout << dice_vector;
+    }
+
+    void test8(Dice_vector &vector) {
+        Dice_vector dice_vector(std::move(vector));
+        cout << dice_vector;
+    }
+
+    void test9(Dice_vector &vector) {
+        Dice_vector dice_vector(100);
+        dice_vector = std::move(vector);
+        cout << dice_vector;
+    }
+
     void test_operators(Dice_vector &vector) {
-        void (*foo[])(Dice_vector &) = {nullptr, test1, test2, test3, test4, test5, display_dice};
+        void (*foo[])(Dice_vector &) = {nullptr, test1, test2, test3, test4, test5,
+                                        test6, test7, test8, test9};
         while (1) {
             menu();
             int number = read_int(">");
-            while (number < 0 || number > 6) {
-                number = read_int("correct number");
-            }
             if (number == 0) {
                 break;
             }

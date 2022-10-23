@@ -28,6 +28,7 @@ namespace Dialog {
 
     void test_operators(Dice_vector &vector);
 
+    void create_new_group(Dice_vector &vector);
 }
 
 #endif //DIALOG_H
