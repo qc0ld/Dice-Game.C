@@ -63,6 +63,8 @@ namespace DiceSpace {
         Dice_vector &operator=(Dice_vector &&vector);
 
         ~Dice_vector();
+
+        int zalupa(int pizda);
     };
 
 }
