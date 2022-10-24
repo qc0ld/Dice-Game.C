@@ -64,7 +64,6 @@ namespace DiceSpace {
 
         ~Dice_vector();
     };
-
 }
 
 std::ostream &operator<<(std::ostream &os, const DiceSpace::Dice_vector &vector);
